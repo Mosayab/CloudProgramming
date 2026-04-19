@@ -1,0 +1,30 @@
+<html>
+<head>
+<title>provider.tf</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #bcbec4;}
+.s1 { color: #bcbec4;}
+.s2 { color: #6aab73;}
+</style>
+</head>
+<body bgcolor="#1e1f22">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+provider.tf</font>
+</center></td></tr></table>
+<pre><span class="s0">terraform {</span>
+  <span class="s0">required_providers {</span>
+    <span class="s0">aws = {</span>
+      <span class="s0">source  = </span><span class="s2">&quot;hashicorp/aws&quot;</span>
+      <span class="s0">version = </span><span class="s2">&quot;5.54.1&quot;</span>
+    <span class="s0">}</span>
+  <span class="s0">}</span>
+<span class="s0">}</span>
+
+<span class="s0">provider </span><span class="s2">&quot;aws&quot; </span><span class="s0">{</span>
+  <span class="s0">region = </span><span class="s2">&quot;us-east-1&quot;</span>
+<span class="s0">}</span></pre>
+</body>
+</html>

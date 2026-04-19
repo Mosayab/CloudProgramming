@@ -1,0 +1,29 @@
+<html>
+<head>
+<title>variables.tf</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #bcbec4;}
+.s1 { color: #bcbec4;}
+.s2 { color: #6aab73;}
+.s3 { color: #7a7e85;}
+.s4 { color: #cf8e6d;}
+</style>
+</head>
+<body bgcolor="#1e1f22">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+variables.tf</font>
+</center></td></tr></table>
+<pre><span class="s0">variable </span><span class="s2">&quot;s3bucket&quot; </span><span class="s0">{</span>
+  <span class="s0">default = </span><span class="s2">&quot;asdfghjkjhgfdsasdfghjkjhgfds&quot; </span><span class="s3">#has to be unique so random gibberish has been used</span>
+<span class="s0">}</span>
+
+<span class="s0">variable </span><span class="s2">&quot;policy&quot; </span><span class="s0">{</span>
+  <span class="s0">default = </span><span class="s2">&quot;{</span><span class="s4">\&quot;</span><span class="s2">Version</span><span class="s4">\&quot;</span><span class="s2">:</span><span class="s4">\&quot;</span><span class="s2">2012-10-17</span><span class="s4">\&quot;</span><span class="s2">,</span><span class="s4">\&quot;</span><span class="s2">Statement</span><span class="s4">\&quot;</span><span class="s2">:[{</span><span class="s4">\&quot;</span><span class="s2">Effect</span><span class="s4">\&quot;</span><span class="s2">:</span><span class="s4">\&quot;</span><span class="s2">Allow</span><span class="s4">\&quot;</span><span class="s2">,</span><span class="s4">\&quot;</span><span class="s2">Principal</span><span class="s4">\&quot;</span><span class="s2">:</span><span class="s4">\&quot;</span><span class="s2">*</span><span class="s4">\&quot;</span><span class="s2">,</span><span class="s4">\&quot;</span><span class="s2">Action</span><span class="s4">\&quot;</span><span class="s2">:</span><span class="s4">\&quot;</span><span class="s2">s3:GetObject</span><span class="s4">\&quot;</span><span class="s2">,</span><span class="s4">\&quot;</span><span class="s2">Resource</span><span class="s4">\&quot;</span><span class="s2">:</span><span class="s4">\&quot;</span><span class="s2">arn:aws:s3:::my-bucket-name/*</span><span class="s4">\&quot;</span><span class="s2">}]}&quot;</span>
+
+
+<span class="s0">}</span></pre>
+</body>
+</html>

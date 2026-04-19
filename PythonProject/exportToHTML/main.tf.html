@@ -1,0 +1,85 @@
+<html>
+<head>
+<title>main.tf</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #bcbec4;}
+.s1 { color: #bcbec4;}
+.s2 { color: #6aab73;}
+.s3 { color: #cf8e6d;}
+</style>
+</head>
+<body bgcolor="#1e1f22">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+main.tf</font>
+</center></td></tr></table>
+<pre><span class="s0">resource </span><span class="s2">&quot;aws_s3_bucket&quot; &quot;page&quot; </span><span class="s0">{</span>
+  <span class="s0">bucket = var</span><span class="s1">.</span><span class="s0">s3bucket</span>
+<span class="s0">}</span>
+
+<span class="s0">resource </span><span class="s2">&quot;aws_s3_bucket_ownership_controls&quot; &quot;ownership&quot; </span><span class="s0">{</span>
+  <span class="s0">bucket = aws_s3_bucket</span><span class="s1">.</span><span class="s0">page</span><span class="s1">.</span><span class="s0">id</span>
+  <span class="s0">rule {</span>
+    <span class="s0">object_ownership = </span><span class="s2">&quot;BucketOwnerPreferred&quot;</span>
+  <span class="s0">}</span>
+<span class="s0">}</span>
+
+<span class="s0">resource </span><span class="s2">&quot;aws_s3_bucket_public_access_block&quot; &quot;access&quot; </span><span class="s0">{</span>
+  <span class="s0">bucket = aws_s3_bucket</span><span class="s1">.</span><span class="s0">page</span><span class="s1">.</span><span class="s0">id</span>
+
+  <span class="s0">block_public_acls = </span><span class="s3">false</span>
+  <span class="s0">block_public_policy = </span><span class="s3">false</span>
+  <span class="s0">ignore_public_acls = </span><span class="s3">false</span>
+  <span class="s0">restrict_public_buckets = </span><span class="s3">false</span>
+<span class="s0">}</span>
+
+<span class="s0">resource </span><span class="s2">&quot;aws_s3_bucket_acl&quot; &quot;acl&quot; </span><span class="s0">{</span>
+  <span class="s0">depends_on = [</span>
+  <span class="s0">aws_s3_bucket_ownership_controls</span><span class="s1">.</span><span class="s0">ownership,</span>
+  <span class="s0">aws_s3_bucket_public_access_block</span><span class="s1">.</span><span class="s0">access]</span>
+
+  <span class="s0">bucket = aws_s3_bucket</span><span class="s1">.</span><span class="s0">page</span><span class="s1">.</span><span class="s0">id</span>
+  <span class="s0">acl = </span><span class="s2">&quot;public-read&quot;</span>
+<span class="s0">}</span>
+
+<span class="s0">resource </span><span class="s2">&quot;aws_s3_object&quot; &quot;object&quot; </span><span class="s0">{</span>
+  <span class="s0">bucket = aws_s3_bucket</span><span class="s1">.</span><span class="s0">page</span><span class="s1">.</span><span class="s0">id</span>
+  <span class="s0">key    = </span><span class="s2">&quot;helloworld.html&quot;</span>
+  <span class="s0">source = </span><span class="s2">&quot;helloworld.html&quot;</span>
+  <span class="s0">acl = </span><span class="s2">&quot;public-read&quot;</span>
+  <span class="s0">content_type = </span><span class="s2">&quot;text/html&quot;</span>
+<span class="s0">}</span>
+
+<span class="s0">resource </span><span class="s2">&quot;aws_s3_bucket_policy&quot; &quot;policy&quot; </span><span class="s0">{</span>
+  <span class="s0">bucket = aws_s3_bucket</span><span class="s1">.</span><span class="s0">page</span><span class="s1">.</span><span class="s0">id</span>
+
+  <span class="s0">policy = jsonencode</span><span class="s1">(</span><span class="s0">{</span>
+    <span class="s0">Version = </span><span class="s2">&quot;2012-10-17&quot;</span>
+    <span class="s0">Statement = [</span>
+      <span class="s0">{</span>
+        <span class="s0">Effect    = </span><span class="s2">&quot;Allow&quot;</span>
+        <span class="s0">Principal = </span><span class="s2">&quot;*&quot;</span>
+        <span class="s0">Action    = </span><span class="s2">&quot;s3:GetObject&quot;</span>
+        <span class="s0">Resource  = </span><span class="s2">&quot;${aws_s3_bucket.page.arn}/*&quot;</span>
+      <span class="s0">}</span>
+    <span class="s0">]</span>
+  <span class="s0">}</span><span class="s1">)</span>
+<span class="s0">}</span>
+
+<span class="s0">resource </span><span class="s2">&quot;aws_s3_bucket_website_configuration&quot; &quot;configuration&quot; </span><span class="s0">{</span>
+  <span class="s0">bucket = aws_s3_bucket</span><span class="s1">.</span><span class="s0">page</span><span class="s1">.</span><span class="s0">id</span>
+
+  <span class="s0">index_document {</span>
+    <span class="s0">suffix = </span><span class="s2">&quot;hello_world.html&quot;</span>
+  <span class="s0">}</span>
+
+  <span class="s0">depends_on = [aws_s3_bucket_acl</span><span class="s1">.</span><span class="s0">acl]</span>
+<span class="s0">}</span>
+
+<span class="s0">output </span><span class="s2">&quot;url&quot; </span><span class="s0">{</span>
+  <span class="s0">value = aws_s3_bucket_website_configuration</span><span class="s1">.</span><span class="s0">configuration</span><span class="s1">.</span><span class="s0">website_endpoint</span>
+<span class="s0">}</span></pre>
+</body>
+</html>
