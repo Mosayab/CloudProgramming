@@ -12,10 +12,15 @@ AWS account
 3. Run the following commands in order
    ```bash
    terraform init
+   ```
+   ```bash
    terraform plan
+   ```
+   ```bash
    terraform apply
+   ```
 4. Confirm by typing yes if prompted then wait for the code to run.
 5. A url for the page will be in the output, use it to access the page by copy/pasting in your browser
-6. After finishing, to avoid extra costs simply run
+6. After finishing, to close the page simply run
    ```bash
    terraform destroy
